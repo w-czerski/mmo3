@@ -4,7 +4,7 @@
 MANIFEST_DIR="$HOME/.manifests"
 MMO3_PATH="/usr/local/bin/mmo3"
 
-# Step 1: Check if ~/manifests directory exists, if not, create it
+# Step 1: Check if ~/.manifests directory exists, if not, create it
 if [ ! -d "$MANIFEST_DIR" ]; then
     echo "Creating directory $MANIFEST_DIR..."
     mkdir -p "$MANIFEST_DIR"

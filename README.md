@@ -1,6 +1,7 @@
 # MMO3 - Manifest Manager for O3DE
 
-`mmo3` is a simple command-line tool built to manage O3DE (`Open 3D Engine`) manifests for projects and engines. 
+`mmo3` is a simple command-line tool built to manage O3DE (`Open 3D Engine`) manifests for projects and engines.
+
 If you're working with multiple versions of O3DE engines and their respective manifests, `mmo3` allows you to effortlessly switch between them, create new manifest configurations, and manage project setups without manually copying files.
 
 ### Why This Tool?
@@ -31,7 +32,7 @@ O3DE configurations are stored in JSON files (e.g., `o3de_manifest.json`), and i
 ```bash
 ./install.sh
 ```
-This will check for the ~/manifests directory and create it if necessary. It will then copy the mmo3.py script to /usr/local/bin/ for global access and set the appropriate executable permissions.     
+This will check for the `~/.manifests` directory and create it if necessary. It will then copy the mmo3.py script to /usr/local/bin/ for global access and set the appropriate executable permissions.     
 
 3. **Custom Installation Path**
 
@@ -116,7 +117,7 @@ mmo3 -n new_project_manifest.json
 
 ## How It Works 
 
-`mmo3.py` manages the `o3de_manifest.json` required by Open 3D Engine (O3DE). It works by copying and replacing the manifest located at `~/.o3de/o3de_manifest.json` with the JSON files stored in a separate directory (`~/manifests`). 
+`mmo3.py` manages the `o3de_manifest.json` required by Open 3D Engine (O3DE). It works by copying and replacing the manifest located at `~/.o3de/o3de_manifest.json` with the JSON files stored in a separate directory (`~/.manifests`). 
 
 Here’s a breakdown of the basic functionality: 
 
@@ -130,7 +131,6 @@ The tool is designed to streamline development across different engine versions,
 
 ## Requirements
     Python 3.x
-    Linux/Ubuntu (though should work on other UNIX-like systems)
 ---
 
 ## License 
