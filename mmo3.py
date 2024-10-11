@@ -5,6 +5,7 @@ import shutil
 import argparse
 import json
 from pathlib import Path
+import filecmp
 
 # Set default paths
 HOME = str(Path.home())
@@ -25,19 +26,14 @@ def list_manifests():
     else:
         current_manifest_data = None
 
-    # Function to check if two manifest JSONs represent the same engine/gem setup
-    def is_same_manifest(manifest_a_file, manifest_b_data):
+    # Function to check if two manifest files are identical
+    def is_same_manifest_by_content(manifest_a_path, manifest_b_path):
         try:
-            with open(manifest_a_file, 'r') as f:
-                manifest_a_data = json.load(f)
-            # Assuming O3DE uses certain keys like "engine_version" or "projects" that you can compare
-            if manifest_a_data.get("engine_version") == manifest_b_data.get("engine_version"):
-                return True
-            if manifest_a_data.get("projects") == manifest_b_data.get("projects"):
-                return True
+            # Compare the file contents directly
+            return filecmp.cmp(manifest_a_path, manifest_b_path, shallow=False)
         except Exception as e:
-            print(f"Error reading {manifest_a_file}: {e}")
-        return False
+            print(f"Error comparing {manifest_a_path} with {manifest_b_path}: {e}")
+            return False
 
     # Check if there are any available manifest files
     if len(manifests) > 0:
@@ -46,8 +42,8 @@ def list_manifests():
             manifest_path = os.path.join(MANIFEST_DIR, manifest)
             in_use = ""
 
-            # Compare with the current ~/.o3de manifest.json content
-            if current_manifest_data and is_same_manifest(manifest_path, current_manifest_data):
+            # Directly compare the content of the current ~/.o3de manifest with the manifest in ~/.manifests
+            if os.path.exists(O3DE_MANIFEST) and is_same_manifest_by_content(O3DE_MANIFEST, manifest_path):
                 in_use = " <-- currently used"
 
             print(f"  - {manifest}{in_use}")
