@@ -1,2 +1,2 @@
 # mmo3
-Manifest Mamanger for O3DE
+Manifest Manager for O3DE
