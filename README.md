@@ -1,6 +1,7 @@
-# MMO3 Manifest Manager
+# MMO3 - Manifest Manager for O3DE
 
-`mmo3` is a simple command-line tool built to manage O3DE (`Open 3D Engine`) manifests for projects and engines. If you're working with multiple versions of O3DE engines and their respective manifests, `mmo3` allows you to effortlessly switch between them, create new manifest configurations, and manage project setups without manually copying files.
+`mmo3` is a simple command-line tool built to manage O3DE (`Open 3D Engine`) manifests for projects and engines. 
+If you're working with multiple versions of O3DE engines and their respective manifests, `mmo3` allows you to effortlessly switch between them, create new manifest configurations, and manage project setups without manually copying files.
 
 ### Why This Tool?
 O3DE configurations are stored in JSON files (e.g., `o3de_manifest.json`), and it's often necessary to use different engine versions, project setups, or attached gems—all of which may require different manifests. `MMO3` simplifies the process of switching between and managing these manifests stored in `~/.o3de`.
