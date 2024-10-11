@@ -23,7 +23,7 @@ def list_manifests():
             print(f"  - {manifest}{in_use}")
     else:
         print("Currently there is no available manifest to switch on."
-              "\nCreate or copy to manifests into path: ", MANIFEST_DIR)
+              "\nCreate or copy your manifests into path: ", MANIFEST_DIR)
 
 
 # Set the current manifest to the chosen one
