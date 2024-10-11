@@ -16,7 +16,7 @@ CURRENT_MANIFEST = os.path.join(O3DE_HOME, "o3de_manifest.json")
 # Helper function to get a list of all manifest files in the manifest directory
 def list_manifests():
     manifests = [f for f in os.listdir(MANIFEST_DIR) if f.endswith('.json')]
-    if manifests.count() > 0:
+    if len(manifests) > 0:
         print("Available manifests:")
         for manifest in manifests:
             in_use = " <-- currently used" if os.path.basename(CURRENT_MANIFEST) == manifest else ""
