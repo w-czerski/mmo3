@@ -16,10 +16,14 @@ CURRENT_MANIFEST = os.path.join(O3DE_HOME, "o3de_manifest.json")
 # Helper function to get a list of all manifest files in the manifest directory
 def list_manifests():
     manifests = [f for f in os.listdir(MANIFEST_DIR) if f.endswith('.json')]
-    print("Available manifests:")
-    for manifest in manifests:
-        in_use = " <-- currently used" if os.path.basename(CURRENT_MANIFEST) == manifest else ""
-        print(f"  - {manifest}{in_use}")
+    if manifests.count() > 0:
+        print("Available manifests:")
+        for manifest in manifests:
+            in_use = " <-- currently used" if os.path.basename(CURRENT_MANIFEST) == manifest else ""
+            print(f"  - {manifest}{in_use}")
+    else:
+        print("Currently there is no available manifest to switch on."
+              "\nCreate or copy to manifests into path: ", MANIFEST_DIR)
 
 
 # Set the current manifest to the chosen one
@@ -105,7 +109,7 @@ def main():
         duplicate_manifest(args.duplicate)
 
     if args.version:
-        print("MMO3 Manifest Manager version 1.0")
+        print("Manifest Manager - mmo3 - version 1.0")
 
 
 if __name__ == '__main__':
