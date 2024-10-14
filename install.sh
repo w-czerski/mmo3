@@ -26,7 +26,7 @@ fi
 
 # Step 3: Check if mmo3 is in the user's PATH and executable
 if command -v mmo3 > /dev/null 2>&1; then
-    echo "Installation complete! You can now use 'mmo3' from the command line."
+    echo "Installation complete! You can now use mmo3."
     echo "Type mmo3 --help or -h to view available commands."
 else
     echo "Installation failed: mmo3 is not available in your PATH. Please check manually."

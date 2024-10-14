@@ -6,11 +6,13 @@ import argparse
 import json
 from pathlib import Path
 import filecmp
+import time
 
 # Set default paths
 HOME = str(Path.home())
 MANIFEST_DIR = f"{HOME}/.manifests"
 O3DE_MANIFEST = os.path.join(HOME, ".o3de", "o3de_manifest.json")
+
 
 # Helper function to get a list of all manifest files in the manifest directory
 def list_manifests():
@@ -104,6 +106,39 @@ def duplicate_manifest(manifest_name):
         print(f"Manifest '{manifest_name}' does not exist.")
 
 
+# Show the status of the current manifest
+def show_status():
+    # Check if the current manifest exists
+    if not os.path.exists(O3DE_MANIFEST):
+        print("No active manifest found in ~/.o3de")
+        return
+
+    # Get the last modified time of the current manifest
+    modified_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(os.path.getmtime(O3DE_MANIFEST)))
+
+    # Load the current manifest
+    with open(O3DE_MANIFEST, 'r') as f:
+        current_manifest_data = json.load(f)
+
+    engine_version = current_manifest_data.get("engines", "Unknown")
+    projects = current_manifest_data.get("projects", [])
+
+    # Determine the name of the manifest being used by comparing with ~/.manifests
+    manifest_name = "Unknown"
+    for manifest in os.listdir(MANIFEST_DIR):
+        manifest_path = os.path.join(MANIFEST_DIR, manifest)
+        if filecmp.cmp(O3DE_MANIFEST, manifest_path, shallow=False):
+            manifest_name = manifest
+            break
+
+    # Print the status
+    print(f"Manifest status:")
+    print(f"  Last Modified: {modified_time}")
+    print(f"  O3DE Version: {engine_version}")
+    print(f"  Projects: {projects}")
+    print(f"  Current Manifest: {manifest_name}")
+
+
 # Main function to handle arguments
 def main():
     parser = argparse.ArgumentParser(description="MMO3 Manifest Manager")
@@ -113,6 +148,7 @@ def main():
     parser.add_argument('-new', '-n', type=str, help="Create a new manifest")
     parser.add_argument('-open', '-o', nargs='?', const='', help="Open manifest in text editor (nano)")
     parser.add_argument('-duplicate', '-d', type=str, help="Duplicate an existing manifest")
+    parser.add_argument('-status', '-st', action="store_true", help="Show the status of the active manifest")
     parser.add_argument("-version", "-v", action="store_true", help="Show the application version")
 
     args = parser.parse_args()
@@ -131,6 +167,9 @@ def main():
 
     if args.duplicate:
         duplicate_manifest(args.duplicate)
+
+    if args.status:
+        show_status()
 
     if args.version:
         print("mmo3 - O3DE Manifest Manager - version 1.0")
