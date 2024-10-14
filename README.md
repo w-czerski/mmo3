@@ -20,7 +20,23 @@ O3DE configurations are stored in JSON files (e.g., `o3de_manifest.json`), and i
 
 ---
 
-## Installation Instructions
+## Requirements
+- Python 3.x
+- Git
+- Unix system
+```bash
+# Update package list and upgrade existing packages
+sudo apt update
+sudo apt upgrade -y
+# Install Python 3 and pip
+sudo apt install python3 python3-pip -y
+# Check Python and Pip version
+python3 --version
+pip3 --version
+```
+---
+
+## Installation 
 
 1. **Clone this repository**:
 ```bash
@@ -30,15 +46,15 @@ O3DE configurations are stored in JSON files (e.g., `o3de_manifest.json`), and i
 
 2. **Run the installation script :**
 ```bash
-./install.sh
+sh ./install.sh
 ```
 This will check for the `~/.manifests` directory and create it if necessary. It will then copy the mmo3.py script to /usr/local/bin/ for global access and set the appropriate executable permissions.     
 
-3. **Custom Installation Path**
+### Custom Installation Path
 
 If you want to install the `mmo3` script to a custom location (for example, if you don't have root permissions to write into `/usr/local/bin/`), specify your desired installation path as an argument to the installation script: 
 ```bash
-./install.sh /your/custom/directory
+sh ./install.sh /your/custom/directory
 ```
 
 Ensure that the specified installation path (e.g., `/your/custom/directory`) is added to your `$PATH`. For example, you can add it to your .bashrc or .zshrc: 
@@ -104,13 +120,29 @@ mmo3 -version
 ```bash
 mmo3 -ls
 ```
+Output:
+```bash
+Available manifests:
+  - o3de_manifest_temp.json
+  - o3de_manifest_test.json
+  - o3de_manifest_2409.json <-- currently used
+  - o3de_manifest_23101.json
+```
 2. **Set an active manifest** for project work: 
 ```bash
-mmo3 -set my_project_manifest.json
+mmo3 -set o3de_manifest_2409.json
+```
+Output:
+```bash
+The manifest 'o3de_manifest_2409.json' is now set as the active one.
 ```
 3. **Create a new manifest** for a new project you're working on: 
 ```bash
 mmo3 -n new_project_manifest.json
+```
+Output:
+```bash
+Created new manifest - 'new_project_manifest.json'
 ```
 
 ---
@@ -129,18 +161,14 @@ The tool is designed to streamline development across different engine versions,
 
 ---
 
-## Requirements
-    Python 3.x
----
-
 ## License 
 
 **GNU GENERAL PUBLIC LICENSE.**
 
 Everyone is permitted to copy and distribute verbatim copies
-of this license document, but changing it is not allowed.
+of this product.
 
 ---
 
 ## Contributing
-Have ideas for features? Found a bug? Feel free to open an issue or submit a pull request! 
+Have ideas for features? Found a bug? Feel free to open an issue or submit a pull request :blush:

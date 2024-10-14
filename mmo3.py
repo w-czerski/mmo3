@@ -9,9 +9,7 @@ import filecmp
 
 # Set default paths
 HOME = str(Path.home())
-O3DE_HOME = f"{HOME}/.o3de"
 MANIFEST_DIR = f"{HOME}/.manifests"
-CURRENT_MANIFEST = os.path.join(O3DE_HOME, "o3de_manifest.json")
 O3DE_MANIFEST = os.path.join(HOME, ".o3de", "o3de_manifest.json")
 
 # Helper function to get a list of all manifest files in the manifest directory
@@ -56,7 +54,7 @@ def list_manifests():
 def set_manifest(manifest_name):
     manifest_path = os.path.join(MANIFEST_DIR, manifest_name)
     if os.path.exists(manifest_path):
-        shutil.copy(manifest_path, CURRENT_MANIFEST)
+        shutil.copy(manifest_path, O3DE_MANIFEST)
         print(f"The manifest '{manifest_name}' is now set as the active one.")
     else:
         print(f"Manifest '{manifest_name}' does not exist.")
@@ -77,7 +75,7 @@ def create_manifest(manifest_name):
         }
         with open(new_manifest_path, 'w') as f:
             json.dump(default_manifest, f, indent=4)
-        print(f"New manifest '{manifest_name}' created.")
+        print(f"Created new manifest -'{manifest_name}'")
 
 
 # Open a manifest in the default editor (nano)
@@ -85,7 +83,7 @@ def open_manifest(manifest_name=None):
     if manifest_name:
         manifest_path = os.path.join(MANIFEST_DIR, manifest_name)
     else:
-        manifest_path = CURRENT_MANIFEST
+        manifest_path = O3DE_MANIFEST
 
     if os.path.exists(manifest_path):
         os.system(f"nano {manifest_path}")
@@ -101,7 +99,7 @@ def duplicate_manifest(manifest_name):
         if not new_name.endswith('.json'):
             new_name += '.json'
         shutil.copy(manifest_path, os.path.join(MANIFEST_DIR, new_name))
-        print(f"Manifest duplicated as '{new_name}'.")
+        print(f"Manifest duplicated as '{new_name}'")
     else:
         print(f"Manifest '{manifest_name}' does not exist.")
 
@@ -135,7 +133,7 @@ def main():
         duplicate_manifest(args.duplicate)
 
     if args.version:
-        print("Manifest Manager - mmo3 - version 1.0")
+        print("mmo3 - O3DE Manifest Manager - version 1.0")
 
 
 if __name__ == '__main__':
