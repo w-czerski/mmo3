@@ -19,14 +19,7 @@ def list_manifests():
     # List all .json files in the ~/.manifests directory
     manifests = [f for f in os.listdir(MANIFEST_DIR) if f.endswith('.json')]
 
-    # Load the current ~/.o3de/o3de_manifest.json
-    if os.path.exists(O3DE_MANIFEST):
-        with open(O3DE_MANIFEST, 'r') as f:
-            current_manifest_data = json.load(f)
-    else:
-        current_manifest_data = None
-
-    # Function to check if two manifest files are identical
+    # Function to determine if two manifest files are identical
     def is_same_manifest_by_content(manifest_a_path, manifest_b_path):
         try:
             # Compare the file contents directly
@@ -38,15 +31,21 @@ def list_manifests():
     # Check if there are any available manifest files
     if len(manifests) > 0:
         print("Available manifests:")
+
+        # First pass: Print the "in_use" manifest
         for manifest in manifests:
             manifest_path = os.path.join(MANIFEST_DIR, manifest)
-            in_use = ""
-
-            # Directly compare the content of the current ~/.o3de manifest with the manifest in ~/.manifests
             if os.path.exists(O3DE_MANIFEST) and is_same_manifest_by_content(O3DE_MANIFEST, manifest_path):
-                in_use = " <-- currently used"
+                print(f"\n  - [active] {manifest}\n")
+                break  # Only one manifest can be "in_use"
 
-            print(f"  - {manifest}{in_use}")
+        # Second pass: Print all other manifests except the "in_use" one
+        for manifest in manifests:
+            manifest_path = os.path.join(MANIFEST_DIR, manifest)
+            if os.path.exists(O3DE_MANIFEST) and is_same_manifest_by_content(O3DE_MANIFEST, manifest_path):
+                continue  # Skip the "in_use" manifest
+            print(f"  - {manifest}")
+
     else:
         print("Currently, there are no available manifests to switch on."
               "\nPlease create or copy manifests into the path: ", MANIFEST_DIR)
@@ -172,7 +171,7 @@ def main():
         show_status()
 
     if args.version:
-        print("mmo3 - O3DE Manifest Manager - version 1.0")
+        print("mmo3 - O3DE Manifest Manager - version 1.1")
 
 
 if __name__ == '__main__':
